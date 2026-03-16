@@ -103,9 +103,3 @@ schedule:
 | KST (UTC+9) | `0 0 * * *` | 09:00 KST |
 | EST (UTC-5) | `0 5 * * *` | 00:00 EST |
 | PST (UTC-8) | `0 8 * * *` | 00:00 PST |
-
----
-
-## License
-
-[MIT](LICENSE)
