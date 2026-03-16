@@ -1,0 +1,40 @@
+name: Star Giver - Auto Follow & Star
+
+on:
+  schedule:
+    # Daily at 00:00 UTC (09:00 KST) — adjust to your timezone
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  star-giver:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Star Giver
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          TARGET_USERNAME: ${{ vars.TARGET_USERNAME }}
+        run: python star_giver.py
+
+      - name: Commit state changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet || git commit -m "chore: update follower state [skip ci]"
+          git push
