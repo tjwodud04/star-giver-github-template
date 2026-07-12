@@ -29,7 +29,7 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
           TARGET_USERNAME: ${{ vars.TARGET_USERNAME }}
-        run: python star_giver.py
+        run: python -m stargiver
 
       - name: Commit state changes
         run: |
